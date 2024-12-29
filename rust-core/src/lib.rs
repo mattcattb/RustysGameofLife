@@ -1,2 +1,2 @@
 
-// Core Library (Exports to public API)
+// Core Library (Exports to public API) for working with javascript
