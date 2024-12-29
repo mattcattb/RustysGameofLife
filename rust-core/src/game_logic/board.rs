@@ -11,13 +11,13 @@ pub struct Board {
 impl fmt::Display for Board {
     // todo write this for board!
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-
+        writeln!(f, "Board {}x{}", self.height, self.width)?;
         for row in &self.grid {
             for cell in row {
                 write!(f, "{}", cell)?;
             }
+            writeln!(f)?;
         }
-        writeln!(f)?;
         Ok(())
     }
 }
@@ -47,4 +47,9 @@ impl Board {
             self.grid[r][c] = value;
         }        
     }
+
+    pub fn get_grid(&self) -> Vec<Vec<char>>{
+        return self.grid.clone()
+    }
+
 }

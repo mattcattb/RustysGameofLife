@@ -43,11 +43,8 @@ impl Game {
         Self {board}
     }
 
-    pub fn get_board(&self) -> &Board {
-        &self.board
-    }
     pub fn next_state(&mut self) {
-        let new_grid = todo!();
+        let new_grid = self.board.get_grid();
         self.board = Board::new(new_grid);
     }
 

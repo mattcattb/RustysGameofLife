@@ -5,10 +5,6 @@ use std::env;
 mod game_logic;
 use game_logic::game;
 
-struct Args {
-    input_board: String, // path to board .txt file! 
-}
-
 fn main() -> Result<(), io::Error>{
 
     let args:Vec<String> = env::args().collect();
