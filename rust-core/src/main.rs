@@ -2,34 +2,35 @@
 use std::io;
 use std::env;
 
-use game_logic::board::Board;
-
-mod utils;
 mod game_logic;
+use game_logic::game;
 
 struct Args {
     input_board: String, // path to board .txt file! 
 }
 
-fn main() {
+fn main() -> Result<(), io::Error>{
 
     let args:Vec<String> = env::args().collect();
-    dbg!(args);
 
     println!("Welcome to conways game of life!");
     display_commands();
 
-    // first, create board! 
-    let board: game_logic::board::Board = Board::new();
-    board.print();
+    // first, create board using... something?
+
+    let game = game::generate_game_with_args(args)?;
+
+    game.print();
 
     // then, iterate board forever until button pressed or whatever
 
-    game_loop(board);
+    game_loop(game);
+
+    Ok(())
 }
 
 
-fn game_loop(board: game_logic::board::Board){
+fn game_loop(mut game: game::Game){
     // do game logic stuff now!
 
     loop {
@@ -40,6 +41,8 @@ fn game_loop(board: game_logic::board::Board){
             "n" => {
                 //todo advance state!
                 println!("Going to next state!");
+                game.next_state();
+                game.print();
             }
             "q" => {
                 println!("Quitting game!");

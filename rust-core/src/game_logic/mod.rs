@@ -1,2 +1,3 @@
 pub mod board;
-pub mod cells;
+pub mod input_output;
+pub mod game;

@@ -1,59 +1,50 @@
-use rand::seq::SliceRandom;
-
-use crate::utils::input_output::read_grid;
+use std::fmt;
 
 #[derive(Debug, Clone)]
 pub struct Board {
-    width: usize,
     height: usize,
-    grid: Vec<String>, // Linear representation of the grid
+    width: usize,
+    grid: Vec<Vec<char>>, // Linear representation of the grid
 }
 
+    
+impl fmt::Display for Board {
+    // todo write this for board!
+    fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
 
-pub fn random_board(height:i32, width:i32, tiles: Vec<char>) -> Board {
-    if tiles.is_empty() {
-        panic!("Not enough Tile options!");
+        for row in &self.grid {
+            for cell in row {
+                write!(f, "{}", cell)?;
+            }
+        }
+        writeln!(f)?;
+        Ok(())
     }
-
-    let mut rng = rand::thread_rng();
-
-    let mut grid = Vec::new();
-
-    for _ in 0..height {
-        let row: String = (0..width)
-            .map(|_| *tiles.choose(&mut rng).expect("Failed to select a random tile"))
-            .collect();
-        grid.push(row);
-    }
-
-    return Board::new(grid);
 }
+
 
 impl Board {
     // Constructor
-    pub fn new(grid: Vec<String>) -> Board {
+    pub fn new(grid: Vec<Vec<char>>) -> Self {
         
         let height:usize = grid.len();
         let width:usize = if height > 0 { grid[0].len() } else { 0 };
-        return Board { width, height, grid };
+        return Self { width, height, grid };
     }
 
     // Get the value of a cell
-    pub fn get(&self, x: usize, y: usize) -> bool {
-        self.grid[x][y]
+    pub fn get(&self, r: usize, c: usize) -> Option<char> {
+        if r < self.height && c < self.width {
+            Some(self.grid[r][c])
+        } else {
+            None
+        }
     }
 
     // Set the value of a cell
-    pub fn set(&mut self, x: usize, y: usize, value: bool) {
-        self.grid[x][y] = value;
-    }
-
-    // Apply a function to all cells (e.g., for rendering)
-    pub fn for_each_cell<F: FnMut(usize, usize, bool)>(&self, mut f: F) {
-        for y in 0..self.height {
-            for x in 0..self.width {
-                f(x, y, self.get(x, y));
-            }
-        }
+    pub fn set(&mut self, r: usize, c: usize, value: char) {
+        if r < self.height && c < self.width {
+            self.grid[r][c] = value;
+        }        
     }
 }
