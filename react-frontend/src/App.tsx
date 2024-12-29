@@ -1,22 +1,29 @@
 import { useState, useEffect } from 'react'
 
-import Grid from './components/Board'
-
 import './styles/App.css'
 import Board from './components/Board';
 
+import {GameWasm} from 'GOL-core-rust'
+
 function App() {
-  const basic_grid = [
-    ['a', 'b', 'c'],
-    ['D', 'E', 'F'],
-    ['G', 'H', 'I'],
-  ];
+
+  const [game, setGame] = useState<GameWasm>();
+  const [grid, setGrid] = useState<Array<Array<string>>>([]);
 
   useEffect(() => {
     // generate your random state!
+    const initWasm = async () => {
+        try {
+            const tile_options = "x0";
+            const newGame = GameWasm.new_random_game(20,20,tile_options);
+            setGame(newGame);
+            setGrid(newGame.get_grid());
+        } catch (error) {
+            console.error("Error occured: ", error);
+        }
+    }
+    initWasm();
   }, []);
-
-  const [grid, setGrid] = useState<string[][]>(basic_grid)
 
   const onTileClick = (r:number, c: number) => {
     // do stuf uhhh
@@ -35,10 +42,14 @@ function App() {
     setGrid(newGrid);
   }
 
-  const nextButtonPress = () => {
+  const onNextPress = () => {
     // do game next state!
     console.log("Moving to next game state!");
     // get the new grid here with wasm!
+  }
+
+  const onResetPress = () => {
+
   }
 
   return (
@@ -46,7 +57,8 @@ function App() {
       <div>
         <Board grid={grid} onClick={onTileClick}/>
       </div>
-      <button onClick={nextButtonPress}>Next</button>
+      <button onClick={onNextPress}>Next</button>
+      <button onClick = {onResetPress}>Reset Board</button>
     </div>
   )
 }
