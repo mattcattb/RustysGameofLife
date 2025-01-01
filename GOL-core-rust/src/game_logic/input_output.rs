@@ -2,6 +2,7 @@ use std::fs::File;            // For opening files
 use std::io::{self, BufRead}; // For reading file lines and handling I/O
 use std::io::BufReader;       // For efficient file reading
 
+
 pub fn read_grid(src:String) -> Result<Vec<Vec<char>>, io::Error> {
 
     let f:File = File::open(&src)?;

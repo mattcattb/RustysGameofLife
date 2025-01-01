@@ -4,6 +4,7 @@ use std::env;
 
 mod game_logic;
 use game_logic::game;
+use game_logic::game::Game;
 
 fn main() -> Result<(), io::Error>{
 
@@ -14,8 +15,6 @@ fn main() -> Result<(), io::Error>{
 
     let game = game::generate_game_with_args(args)?;
 
-    game.print();
-
     // then, iterate board forever until button pressed or whatever
 
     game_loop(game);
@@ -23,7 +22,7 @@ fn main() -> Result<(), io::Error>{
     Ok(())
 }
 
-fn game_loop(mut game: game::Game){
+fn game_loop(mut game: game::GameOfLife){
     // do game logic stuff now!
 
     loop {
@@ -34,7 +33,7 @@ fn game_loop(mut game: game::Game){
             "n" => {
                 //todo advance state!
                 println!("Going to next state!");
-                game.next_state();
+                game.next_turn();
                 game.print();
             }
             "q" => {
