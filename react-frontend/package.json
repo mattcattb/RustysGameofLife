@@ -10,12 +10,13 @@
     "preview": "vite preview",
     "build-wasm": "npm install ../GOL-core-rust/pkg",
     "install-wasm": "npm install ../GOL-core-rust/pkg",
-    "start": "npm run build-wasm && npm run install-wasm && react-scripts start"
+    "start": "npm run build-wasm && npm run install-wasm && vite"
   },
   "dependencies": {
     "GOL-core-rust": "file:../GOL-core-rust/pkg",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "vite-plugin-wasm": "^3.4.1"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",
