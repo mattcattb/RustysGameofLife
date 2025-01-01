@@ -2,6 +2,7 @@ import React from 'react'
 
 type Props = {
     cellElement:string;
+    color:string;
     onClick: () => void;
 }
 
@@ -16,7 +17,7 @@ export default function Cell(props: Props) {
             alignItems: 'center',
             justifyContent: 'center',
             border: '1px solid #000',
-            backgroundColor: '#f0f0f0',
+            backgroundColor: props.color,
             color:"black"
         }}
         onClick={props.onClick}
