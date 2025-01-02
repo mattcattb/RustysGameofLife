@@ -13,9 +13,6 @@ type Props = {
 
 export default function Board(props: Props) {
 
-  if (!props.grid || props.grid.length === 0) {
-    return <div>Loading...</div>;  // Show loading while grid is being populated
-  }
   const boardRef = useRef<HTMLDivElement>(null);
   const [cellSize, setCellSize] = useState<number>(40); // Default cell size
 
@@ -28,8 +25,8 @@ export default function Board(props: Props) {
       const containerHeight = boardRef.current.offsetHeight;
 
       // Calculate the max cell size that fits the grid within the container
-      const maxCellWidth = containerWidth / props.grid[0].length;
-      const maxCellHeight = containerHeight / props.grid.length;
+      const maxCellWidth = containerWidth / props.gameSettings.width;
+      const maxCellHeight = containerHeight / props.gameSettings.height;
 
       // Use the smaller of the two to ensure cells remain square
       const newCellSize = Math.min(maxCellWidth, maxCellHeight);
@@ -39,8 +36,12 @@ export default function Board(props: Props) {
     window.addEventListener("resize", handleResize); // Recalculate on window resize
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [props.grid]);
+  }, [props.gameSettings.width, props.gameSettings.height]);
 
+
+  if (!props.grid || props.grid.length === 0) {
+    return <div>Loading...</div>;  // Show loading while grid is being populated
+  }
 
   return (
     <div 
@@ -50,7 +51,7 @@ export default function Board(props: Props) {
         {
           display: 'grid',
           gridTemplateColumns: `repeat(${props.grid[0].length}, ${cellSize}px)`,
-          gap:"1px",
+          gap:"5px",
           width:"100%",
           height:"100%",
         }
