@@ -14,8 +14,6 @@ type Props = {
 
 export default function Board(props: Props) {
 
-
-
   if (!props.grid || props.grid.length === 0) {
     return <div>Loading...</div>;  // Show loading while grid is being populated
   }

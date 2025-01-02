@@ -4,7 +4,8 @@ export type GameOfLifeSettings = {
     width:number,
     height:number,
     tileOptions:string,
-    colors: GameOfLifeColors
+    colors: GameOfLifeColors,
+    speedMS:number
 }
 
 export type GameOfLifeColors = {

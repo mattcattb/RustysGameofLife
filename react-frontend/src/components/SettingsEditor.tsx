@@ -1,7 +1,9 @@
 
 import React from 'react'
 import { GameOfLifeSettings } from '../types'
-import { useState } from 'react'
+
+import { DimensionEditor } from './SettingsEditor/DimensionEditor'
+import { ColorDropdown } from './SettingsEditor/ColorDropdown'
 
 type Props = {
   gameOfLifeSettings:GameOfLifeSettings;
@@ -13,7 +15,7 @@ export const SettingsEditor = (props: Props) => {
 
   const colorOptions: string[] = ["white", "red", "black", "blue", "orange", "purple"];
   
-  const deadColorSelected = (deadIdx) => {
+  const deadColorSelected = (deadIdx:number) => {
     console.log("Selected new dead idx ", deadIdx);
     props.setGameOfLifeSettings({
       ...props.gameOfLifeSettings,
@@ -24,7 +26,7 @@ export const SettingsEditor = (props: Props) => {
     })
   }
 
-  const aliveColorSelected = (aliveIdx) => {
+  const aliveColorSelected = (aliveIdx:number) => {
     console.log("Selected new alive idx ", aliveIdx);
 
     props.setGameOfLifeSettings({
@@ -37,62 +39,20 @@ export const SettingsEditor = (props: Props) => {
 
   }
 
+  //todo allow the changing of size of board!
+
   return (
     <div>
-      <h3>Game Editor</h3>
-      <div className='color selector'>
+      <h2>Game Editor</h2>
+      <div className='color-selector'>
         <ColorDropdown name={"alive color"} dropdownOptions={colorOptions} onSelect={aliveColorSelected} />
         <ColorDropdown name={"dead color"} dropdownOptions={colorOptions} onSelect={deadColorSelected}/>
+      </div>
+      <div >
+        <DimensionEditor />
+        <div className=''></div>
       </div>
     </div>
   )
 }
 
-type PropsDropdown = {
-  dropdownOptions:string[];
-  name:string
-  onSelect:(idx:number) => void;
-}
-
-const ColorDropdown = (props:PropsDropdown) => {
-  const [open, setOpen] = useState(false);
-  const [idxSelected, setIdxSelected] = useState(0); // choose which of the color dropdown to select!
-
-  const handleOpen = () => {
-    setOpen(!open);
-  }
-
-  const handleClick = (idxClicked:number) => {
-    setIdxSelected(idxClicked);
-    setOpen(!open);
-    props.onSelect(idxClicked);
-  }
-
-  return (
-    <div>
-      <button onClick={handleOpen}>{props.name}: {props.dropdownOptions[idxSelected]}</button>
-      {open ? (
-        <ul className='menu'>
-          {props.dropdownOptions.map((option:string, idx:number) => (
-            <DropdownMenuItem val={option} onClick={() => handleClick(idx)}/>
-          ))}
-        </ul>
-      ) : (
-        null
-      )}
-    </div>
-  )
-}
-
-type PropsItem = {
-  val:string;
-  onClick: () => void;
-}
-
-const DropdownMenuItem = (props:PropsItem) => {
-  return (
-    <li key={props.val} className='menu-item'>
-      <button onClick={props.onClick}>{props.val}</button>
-    </li>
-  )
-}
