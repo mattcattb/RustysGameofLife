@@ -40,6 +40,10 @@ impl GameWasm {
     pub fn interact_tile(&mut self, r:usize, c:usize){
         self.game.interact_tile(r, c);
     }
+
+    pub fn edit_dimensions(&mut self, new_width:usize, new_height:usize){
+        self.game.edit_dimensions(new_width, new_height);
+    }
 }
 
 #[wasm_bindgen]

@@ -43,8 +43,8 @@ export const SettingsEditor = (props: Props) => {
 
   return (
     <div>
-      <h2>Game Editor</h2>
-      <div className='color-selector'>
+      <h2 className='m-3'>Game Editor</h2>
+      <div className='flex flex-col justify-evenly space-y-5 '>
         <ColorDropdown name={"alive color"} dropdownOptions={colorOptions} onSelect={aliveColorSelected} />
         <ColorDropdown name={"dead color"} dropdownOptions={colorOptions} onSelect={deadColorSelected}/>
       </div>

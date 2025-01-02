@@ -32,7 +32,7 @@ I finally wanted to continue practicing web technologies, and specifically combi
 - Core Simulation for Conways game of life.
 - Command line display for moving snapshots of game.
 - Configurable initial setup (tile placements and game config)
-- Pausable, forward and backward game movement.
+- Pausable, forward game movement.
 - Basic elements that use interactions similar to conways (air, stone, dirt, water).
 
 ### Feature List

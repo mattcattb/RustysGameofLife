@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react'
+import { FaPlay, FaPause, FaStepForward, FaRandom } from "react-icons/fa"; // Importing icons
 
 import '../styles/App.css'
 import Board from '../components/Board';
@@ -14,8 +15,8 @@ function GameOfLifeView() {
   const [game, setGame] = useState<GameWasm>();
   const [grid, setGrid] = useState<CharGrid>([]);
   const [gameSettings, setGameSettings] = useState<GameOfLifeSettings>({
-    width:20,
-    height:20,
+    width:10,
+    height:10,
     tileOptions:"x0",
     colors:{
       deadColor:"black",
@@ -99,12 +100,12 @@ function GameOfLifeView() {
 
   return (
   <div className="Game-Of-Life-View">
-    <div className='title'>
+    <div className='mb-5'>
       <h1>Game Of Life</h1>
     </div>
-    <div className="flex flex-row items-start">
-      <div className='flex flex-col items-start space-x-9 m-5 justify-center items-center'>
-        <div className="settings">
+    <div className="flex flex-row justify-evenly ">
+      <div className='flex flex-col justify-start items-start items-center m-5'>
+        <div className="flex flex-col justify-center space-x-4">
             <SettingsEditor gameOfLifeSettings={gameSettings} setGameOfLifeSettings={setGameSettings} />
             <div className='m-1'>
               <label className=''>
@@ -121,11 +122,13 @@ function GameOfLifeView() {
             </div>
 
         </div>
-        <div className="flex flex-col items-start mt-5 justify-center items-center">
-          <button onClick={onNextPress}>Next</button>
-          <button onClick={onPlayPress}>{isPlaying ? "Pause" : "Play"}</button>
-          <button onClick={onRandomizePress}>Randomize Board</button>
+
+        <div className="flex flex-row justify-center items-center space-x-4 mt-5">
+          <button className='px-4 py-2 bg-{color} text-white rounded' onClick={onNextPress}><FaStepForward/></button>
+          <button className='px-4 py-2 bg-{color} text-white rounded' onClick={onPlayPress}>{isPlaying ? <FaPause/> : <FaPlay/>}</button>
+          <button className='px-4 py-2 bg-{color} text-white rounded' onClick={onRandomizePress}>{<FaRandom/>}</button>
         </div>
+      
       </div>
       
       <div className="board">

@@ -14,6 +14,7 @@ pub trait Game {
     fn get_grid(&self) -> Vec<Vec<char>>;
     fn print(&self);
     fn interact_tile(&mut self, r:usize, c:usize);
+    fn edit_dimensions(&mut self, new_height:usize, new_width:usize);
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -23,6 +24,13 @@ pub struct GameOfLife {
 }
 
 impl Game for GameOfLife {
+
+    fn edit_dimensions(&mut self, mut new_height:usize, mut new_width:usize){
+        // enter 0 for a dimention that is to stay the same
+        if (new_height == 0) {new_height = self.grid.len()};
+        if (new_width == 0) {new_width = self.grid[0].len();}
+
+    }
 
     fn get_grid(&self) -> Vec<Vec<char>> {
         // returns a grid of 2D Vector of Chars based on mapping

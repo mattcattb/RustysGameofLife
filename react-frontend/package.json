@@ -16,6 +16,7 @@
     "GOL-core-rust": "file:../GOL-core-rust/pkg",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-icons": "^5.4.0",
     "vite-plugin-wasm": "^3.4.1"
   },
   "devDependencies": {
