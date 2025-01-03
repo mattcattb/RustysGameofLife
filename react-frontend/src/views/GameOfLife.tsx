@@ -96,12 +96,10 @@ function GameOfLifeView() {
   };
 
   const onWipePress = () => {
-    // <button onClick ={onWipePress}>Wipe Board</button> 
-
-    const {tileOptions, width, height } = gameSettings;
-    // const newGame = GameWasm.new_blank_game(height, width, tileOptions);
-    // setGame(newGame);
-    // setGrid(newGame.get_grid());
+    // turn all tiles to dead
+    if (!game) return;
+    game.wipe_board();
+    setGrid(game.get_grid());
   }
 
   const onPlayPress = () => {
@@ -137,6 +135,7 @@ function GameOfLifeView() {
           <button className='px-4 py-2 bg-{color} text-white rounded' onClick={onNextPress}><FaStepForward/></button>
           <button className='px-4 py-2 bg-{color} text-white rounded' onClick={onPlayPress}>{isPlaying ? <FaPause/> : <FaPlay/>}</button>
           <button className='px-4 py-2 bg-{color} text-white rounded' onClick={onRandomizePress}>{<FaRandom/>}</button>
+          <button className='px-4 py-2 bg-{color} text-white rounded' onClick ={onWipePress}>Wipe Board</button>
         </div>
       
       </div>
