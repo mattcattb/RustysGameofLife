@@ -28,7 +28,31 @@ impl Game for GameOfLife {
     fn edit_dimensions(&mut self, mut new_height:usize, mut new_width:usize){
         // enter 0 for a dimention that is to stay the same
         if (new_height == 0) {new_height = self.grid.len()};
-        if (new_width == 0) {new_width = self.grid[0].len();}
+        if (new_width == 0) {new_width = self.grid[0].len()};
+
+        let prev_height = self.grid.len();
+        let prev_width = self.grid[0].len();
+
+        let mut new_grid:Vec<Vec<TileState>> = (0..new_height)
+            .map(|col| vec![TileState::Dead; new_width])
+            .collect(); // collect into 2D vector
+
+        if (new_height > prev_height){
+            new_height = prev_height;
+        }
+        if (new_width > prev_width) {
+            new_width = prev_width;
+        }
+
+        for r in (0..new_height) {
+            let mut new_row: Vec<TileState> = Vec::new();
+            for c in (0.. new_width) {
+                // first create the width 
+                new_grid[r][c] = self.grid[r][c].clone();
+            }
+        }
+
+        self.grid = new_grid;
 
     }
 

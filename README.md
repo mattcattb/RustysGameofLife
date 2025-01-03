@@ -25,6 +25,9 @@ I finally wanted to continue practicing web technologies, and specifically combi
 
 ## Useage 
 
+### Setup
+
+1. Install Cargo
 
 ## Features 
 

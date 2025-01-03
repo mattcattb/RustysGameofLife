@@ -36,7 +36,6 @@ impl GameWasm {
         self.game.next_turn();
     }
 
-    // todo: edit board 
     pub fn interact_tile(&mut self, r:usize, c:usize){
         self.game.interact_tile(r, c);
     }
@@ -44,13 +43,6 @@ impl GameWasm {
     pub fn edit_dimensions(&mut self, new_width:usize, new_height:usize){
         self.game.edit_dimensions(new_width, new_height);
     }
-}
-
-#[wasm_bindgen]
-pub fn init() {
-    // Any initialization logic you need (if any)
-    // For example, you can load any global settings or initial setup if needed
-    // The init function can be empty or contain setup code, if required
 }
 
 fn char_grid_to_array_string(grid: Vec<Vec<char>>) -> Array {
