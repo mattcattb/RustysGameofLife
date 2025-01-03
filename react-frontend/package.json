@@ -8,8 +8,9 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build-wasm": "npm install ../GOL-core-rust/pkg",
-    "install-wasm": "npm install ../GOL-core-rust/pkg",
+    "build-wasm": "cd ../GOL-core-rust && wasm-pack build --target web",
+    "install-wasm": "npm install",
+    "update-wasm": "npm run wasm:build && npm run wasm:link",
     "start": "npm run build-wasm && npm run install-wasm && vite"
   },
   "dependencies": {

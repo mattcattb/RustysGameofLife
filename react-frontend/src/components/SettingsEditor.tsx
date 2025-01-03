@@ -49,7 +49,7 @@ export const SettingsEditor = (props: Props) => {
         <ColorDropdown name={"dead color"} dropdownOptions={colorOptions} onSelect={deadColorSelected}/>
       </div>
       <div >
-        <DimensionEditor />
+        <DimensionEditor gameSettings={props.gameOfLifeSettings} setGameSettings={props.setGameOfLifeSettings}/>
         <div className=''></div>
       </div>
     </div>

@@ -5,7 +5,7 @@ import '../styles/App.css'
 import Board from '../components/Board';
 import {SettingsEditor} from '../components/SettingsEditor';
 
-import {GameWasm} from 'GOL-core-rust'
+import init, {GameWasm} from 'GOL-core-rust'
 
 import { CharGrid, GameOfLifeSettings } from '../types';
 
@@ -30,6 +30,7 @@ function GameOfLifeView() {
 
     const initWasm = async () => {
         try {
+            await init();
             const {tileOptions, width, height} = gameSettings;
             const newGame = GameWasm.new_random_game(height,width,tileOptions);
             setGame(newGame);
@@ -50,6 +51,15 @@ function GameOfLifeView() {
       return () => clearInterval(interval);
     }
   }, [isPlaying, gameSettings.speedMS]);
+
+  useEffect(()=> {
+    if (!game) return;
+    // edit the dimension
+    game.edit_dimensions(gameSettings.height, gameSettings.width);
+    setGrid(game.get_grid());
+
+  }, [gameSettings.height, gameSettings.width]);
+
 
   const onSpeedChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setGameSettings({
