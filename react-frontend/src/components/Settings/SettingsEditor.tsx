@@ -50,7 +50,6 @@ export const SettingsEditor = () => {
 
   return (
     <div className='m-3'>
-      <h2 className='m-3'>Game Editor</h2>
       <div className='flex flex-row justify-evenly space-x-5 '>
         <Dropdown name={"alive color"} dropdownOptions={colorOptions} onSelect={aliveColorSelected} />
         <Dropdown name={"dead color"} dropdownOptions={colorOptions} onSelect={deadColorSelected}/>
@@ -59,7 +58,7 @@ export const SettingsEditor = () => {
         <CustomSlider 
           value={GOLSettings.height}
           onChange={onHeightChange}
-          label="board heigth"
+          label="height"
           min={2}
           max={20}
           step={1}
@@ -67,7 +66,7 @@ export const SettingsEditor = () => {
         <CustomSlider 
           value={GOLSettings.width}
           onChange={onWidthHeight}
-          label="board width"
+          label="width"
           min={2}
           max={20}
           step={1}

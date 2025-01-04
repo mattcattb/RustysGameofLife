@@ -1,6 +1,5 @@
 import React from 'react';
 import { Button, ButtonProps } from '@mui/material';
-import { FaPlay, FaPause, FaStepForward, FaRandom } from 'react-icons/fa';
 
 type CustomButtonProps = ButtonProps & {
   icon: React.ReactNode;

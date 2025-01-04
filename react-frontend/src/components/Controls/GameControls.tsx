@@ -49,7 +49,7 @@ export default function GameControls() {
 
 
   return (
-    <div>
+    <div className="flex flex-col items-center">
       <div className = "flex flex-row justify-center items-center space-x-4 mt-5">
         <CustomButton icon={isPlaying ? <FaPause/> : <FaPlay/>} label='' onClick={onPlayPress} color="primary"/>
         <CustomButton icon={<FaRandom/>} label='' onClick={onRandomizePress} color="primary"/>
