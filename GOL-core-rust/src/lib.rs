@@ -43,6 +43,11 @@ impl GameWasm {
     pub fn edit_dimensions(&mut self, new_width:usize, new_height:usize){
         self.game.edit_dimensions(new_width, new_height);
     }
+
+    pub fn wipe_board(&mut self){
+        // wipe entire game board!
+        self.game.wipe();
+    }
 }
 
 fn char_grid_to_array_string(grid: Vec<Vec<char>>) -> Array {

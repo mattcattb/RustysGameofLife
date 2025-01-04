@@ -23,7 +23,7 @@ A major goal was to create **strong development habits and practices**. I wanted
 I finally wanted to continue practicing web technologies, and specifically combine a non-javascript code with frontend React to produce results.
 
 
-## Useage 
+## Usage 
 
 ### Setup
 

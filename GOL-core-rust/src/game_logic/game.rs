@@ -15,6 +15,7 @@ pub trait Game {
     fn print(&self);
     fn interact_tile(&mut self, r:usize, c:usize);
     fn edit_dimensions(&mut self, new_height:usize, new_width:usize);
+    fn wipe(&mut self);
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -24,6 +25,15 @@ pub struct GameOfLife {
 }
 
 impl Game for GameOfLife {
+
+    fn wipe(&mut self){
+        // turn all to dead 
+        for r in (0..self.grid.len()) {
+            for c in (0.. self.grid[0].len()){
+                self.grid[r][c] = TileState::Dead;
+            }
+        }
+    }
 
     fn edit_dimensions(&mut self, mut new_height:usize, mut new_width:usize){
         // enter 0 for a dimention that is to stay the same
