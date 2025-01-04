@@ -1,9 +1,15 @@
 import './styles/App.css'
+
 import GameOfLifeView from './views/GameOfLife';
+import { GameProvider } from './contexts/GameContext';
 
 function App() {
 
-  return (<GameOfLifeView />)
+  return (
+  <GameProvider>
+    <GameOfLifeView />
+  </GameProvider>
+  )
 }
 
 export default App

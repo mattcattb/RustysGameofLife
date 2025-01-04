@@ -7,7 +7,7 @@ type Props = {
   onSelect:(idx:number) => void;
 }
 
-export const ColorDropdown = (props:Props) => {
+export const Dropdown = (props:Props) => {
   const [open, setOpen] = useState(false);
   const [idxSelected, setIdxSelected] = useState(0); // choose which of the color dropdown to select!
 
@@ -23,11 +23,19 @@ export const ColorDropdown = (props:Props) => {
 
   return (
     <div>
-      <button onClick={handleOpen}>{props.name}: {props.dropdownOptions[idxSelected]}</button>
+      <button 
+        onClick={handleOpen}
+      >
+        {props.name}: {props.dropdownOptions[idxSelected]}
+      </button>
       {open ? (
-        <ul className='menu'>
+        <ul className='absolute'>
           {props.dropdownOptions.map((option:string, idx:number) => (
-            <DropdownMenuItem val={option} onClick={() => handleClick(idx)}/>
+            <DropdownMenuItem 
+              key={idx}
+              val={option} 
+              onClick={() => handleClick(idx)}
+            />
           ))}
         </ul>
       ) : (
@@ -44,7 +52,7 @@ type PropsItem = {
 
 const DropdownMenuItem = (props:PropsItem) => {
   return (
-    <li key={props.val} className='menu-item'>
+    <li key={props.val} className='hover:bg-gray-200'>
       <button onClick={props.onClick}>{props.val}</button>
     </li>
   )
