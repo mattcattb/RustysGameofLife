@@ -20,18 +20,18 @@ export default function Board() {
       const containerHeight = boardRef.current.offsetHeight;
 
       // Calculate the max cell size that fits the grid within the container
-      const maxCellWidth = containerWidth / GOLSettings.width;
-      const maxCellHeight = containerHeight / GOLSettings.height;
+      const maxCellWidth = containerWidth / GOLSettings.gridSizing.width;
+      const maxCellHeight = containerHeight / GOLSettings.gridSizing.height;
 
       // Use the smaller of the two to ensure cells remain square
-      const newCellSize = Math.min(maxCellWidth, maxCellHeight);
+      const newCellSize = Math.min(maxCellWidth, maxCellHeight, 20);
       setCellSize(newCellSize);
     };
     handleResize(); // Initial calculation
     window.addEventListener("resize", handleResize); // Recalculate on window resize
 
     return () => window.removeEventListener("resize", handleResize);
-  }, [GOLSettings.width, GOLSettings.height]);
+  }, [GOLSettings.gridSizing.width, GOLSettings.gridSizing.height]);
 
 
   const onTileClick = (r: number, c: number) => {
@@ -54,9 +54,11 @@ export default function Board() {
         {
           display: 'grid',
           gridTemplateColumns: `repeat(${grid[0].length}, ${cellSize}px)`,
-          gap:"5px",
+          gridTemplateRows: `repeat(${grid.length}, ${cellSize}px)`, 
+          gap:"1px",
           width:"100%",
           height:"100%",
+          overflow:'hidden'
         }
       }
   >

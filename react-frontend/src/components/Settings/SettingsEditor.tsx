@@ -37,14 +37,20 @@ export const SettingsEditor = () => {
   const onHeightChange = (value:number) => {
     setGOLSettings({
       ...GOLSettings,
-      height:value,
+      gridSizing:{
+        ...GOLSettings.gridSizing,
+        height:value
+      }
     });
   }
 
   const onWidthHeight = (value:number) => {
     setGOLSettings({
       ...GOLSettings,
-      width:value,
+      gridSizing:{
+        ...GOLSettings.gridSizing,
+        width:value
+      }
     });
   }
 
@@ -56,7 +62,7 @@ export const SettingsEditor = () => {
       </div>
       <div className='flex flex-col justify-evenly'>
         <CustomSlider 
-          value={GOLSettings.height}
+          value={GOLSettings.gridSizing.height}
           onChange={onHeightChange}
           label="height"
           min={2}
@@ -64,7 +70,7 @@ export const SettingsEditor = () => {
           step={1}
         />
         <CustomSlider 
-          value={GOLSettings.width}
+          value={GOLSettings.gridSizing.width}
           onChange={onWidthHeight}
           label="width"
           min={2}

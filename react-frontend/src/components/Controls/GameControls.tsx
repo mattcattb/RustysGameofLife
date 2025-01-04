@@ -29,7 +29,8 @@ export default function GameControls() {
 
   const onRandomizePress = () => {
     setIsPlaying(false);
-    const { tileOptions, width, height } = GOLSettings;
+    const { tileOptions, gridSizing} = GOLSettings;
+    const {height, width} = gridSizing;
     const newGame = GameWasm.new_random_game(height, width, tileOptions);
     setGame(newGame);
     setGrid(newGame.get_grid());

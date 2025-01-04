@@ -35,8 +35,14 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [game, setGame] = useState<GameWasm | undefined>(undefined);
   const [grid, setGrid] = useState<CharGrid>([]);
   const [GOLSettings, setGOLSettings] = useState<GameOfLifeSettings>({
-    width: 10,
-    height: 10,
+    
+    gridSizing:{
+      width:10,
+      maxWidth:30,
+      height: 10,
+      maxHeight:30
+      
+    },
     tileOptions: "x0",
     colors: {
       deadColor: "black",
@@ -50,7 +56,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     const initWasm = async () => {
       try {
         await init();
-        const { tileOptions, width, height } = GOLSettings;
+        const { tileOptions, gridSizing } = GOLSettings;
+        const {height, width} = gridSizing;
         const newGame = GameWasm.new_random_game(height, width, tileOptions);
         setGame(newGame);
         setGrid(newGame.get_grid());
@@ -76,9 +83,9 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
   useEffect(() => {
     if (!game) return;
-    game.edit_dimensions(GOLSettings.height, GOLSettings.width);
+    game.edit_dimensions(GOLSettings.gridSizing.height, GOLSettings.gridSizing.width);
     setGrid(game.get_grid());
-  }, [GOLSettings.height, GOLSettings.width]);
+  }, [GOLSettings.gridSizing.height, GOLSettings.gridSizing.width]);
 
   return (
     <GameContext.Provider

@@ -31,6 +31,11 @@ const CustomSlider: React.FC<CustomSliderProps> = ({
     onChange(newValue);
   };
 
+  const handleSliderMouseUp = () => {
+    onChange(inputValue); // Call onChange when mouse is released
+  };
+
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const newValue = Number(e.target.value);
     if (newValue >= min && newValue <= max) {
@@ -46,6 +51,7 @@ const CustomSlider: React.FC<CustomSliderProps> = ({
         type="range"
         value={inputValue}
         onChange={handleSliderChange}
+        onMouseUp={handleSliderMouseUp}
         min={min}
         max={max}
         step={step}

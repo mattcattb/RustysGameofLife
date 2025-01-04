@@ -1,11 +1,19 @@
 export type CharGrid = string[][];
 
+export type GridSizeData = {
+  width:number,
+  maxWidth:number,
+  height:number,
+  maxHeight:number
+
+}
+
 export type GameOfLifeSettings = {
-    width:number,
-    height:number,
+    gridSizing:GridSizeData
     tileOptions:string,
     colors: GameOfLifeColors,
     speedMS:number
+    
 }
 
 export type GameOfLifeColors = {
