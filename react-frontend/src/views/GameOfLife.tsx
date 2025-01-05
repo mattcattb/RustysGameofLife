@@ -21,7 +21,7 @@ function GameOfLifeView() {
       <div className="w-full mb-5">
         <button
           onClick={toggleSettings}
-          className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 focus:outline-none"
+          className="bg-blue-500 text-white px-2 py-1 rounded-md hover:bg-blue-600 focus:outline-none"
         >
           {settingsOpen ? 'Hide Settings' : 'Show Settings'}
         </button>

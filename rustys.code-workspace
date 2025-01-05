@@ -1,0 +1,15 @@
+{
+	"folders": [
+        {
+            "name": "src",
+            "path": "GOL-core-rust/src"
+        },
+        {
+            "name": "src",
+            "path": "react-frontend/src"
+        },
+        {
+            "path": "."
+        }
+    ]
+}
