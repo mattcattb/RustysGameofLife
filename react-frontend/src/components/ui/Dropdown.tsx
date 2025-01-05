@@ -1,59 +1,43 @@
-import { useState } from 'react'
-
+import React from 'react';
+import Box from '@mui/material/Box';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import MenuItem from '@mui/material/MenuItem';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
 
 type Props = {
-  dropdownOptions:string[];
-  name:string
-  onSelect:(idx:number) => void;
-}
+  dropdownOptions: string[];
+  name: string;
+  onSelect: (idx: number) => void;
+};
 
-export const Dropdown = (props:Props) => {
-  const [open, setOpen] = useState(false);
-  const [idxSelected, setIdxSelected] = useState(0); // choose which of the color dropdown to select!
+export const Dropdown = ({ dropdownOptions, name, onSelect }: Props) => {
+  const [selectedIdx, setSelectedIdx] = React.useState(0);
 
-  const handleOpen = () => {
-    setOpen(!open);
-  }
-
-  const handleClick = (idxClicked:number) => {
-    setIdxSelected(idxClicked);
-    setOpen(!open);
-    props.onSelect(idxClicked);
-  }
+  const handleChange = (event: SelectChangeEvent<number>) => {
+    const newIdx = event.target.value as number;
+    setSelectedIdx(newIdx);
+    onSelect(newIdx);
+  };
 
   return (
-    <div>
-      <button 
-        onClick={handleOpen}
-      >
-        {props.name}: {props.dropdownOptions[idxSelected]}
-      </button>
-      {open ? (
-        <ul className='absolute'>
-          {props.dropdownOptions.map((option:string, idx:number) => (
-            <DropdownMenuItem 
-              key={idx}
-              val={option} 
-              onClick={() => handleClick(idx)}
-            />
+    <Box sx={{ minWidth: 120 }}>
+      <FormControl fullWidth>
+        <InputLabel id={`${name}-select-label`}>{name}</InputLabel>
+        <Select
+          labelId={`${name}-select-label`}
+          id={`${name}-select`}
+          value={selectedIdx}
+          label={name}
+          onChange={handleChange}
+        >
+          {dropdownOptions.map((option, idx) => (
+            <MenuItem key={idx} value={idx}>
+              {option}
+            </MenuItem>
           ))}
-        </ul>
-      ) : (
-        null
-      )}
-    </div>
-  )
-}
-
-type PropsItem = {
-  val:string;
-  onClick: () => void;
-}
-
-const DropdownMenuItem = (props:PropsItem) => {
-  return (
-    <li key={props.val} className='hover:bg-gray-200'>
-      <button onClick={props.onClick}>{props.val}</button>
-    </li>
-  )
-}
+        </Select>
+      </FormControl>
+    </Box>
+  );
+};

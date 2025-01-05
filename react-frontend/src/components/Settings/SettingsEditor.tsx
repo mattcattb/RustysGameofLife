@@ -1,84 +1,76 @@
-import { Dropdown } from '../ui/Dropdown'
-import CustomSlider from '../ui/Slider'
-
-import { useGame } from '../../contexts/GameContext'
+import React from 'react';
+import Box from '@mui/material/Box';
+import Grid from '@mui/material/Grid';
+import { Dropdown } from '../ui/Dropdown';
+import CustomSlider from '../ui/Slider';
+import { useGame } from '../../contexts/GameContext';
 
 export const SettingsEditor = () => {
-  // for now, just change the dead color and alive colors
-
-  const {GOLSettings, setGOLSettings} = useGame();
+  const { GOLSettings, setGOLSettings } = useGame();
 
   const colorOptions: string[] = ["white", "red", "black", "blue", "orange", "purple"];
-  
-  const deadColorSelected = (deadIdx:number) => {
-    console.log("Selected new dead idx ", deadIdx);
+
+  const handleColorChange = (type: 'aliveColor' | 'deadColor', index: number) => {
     setGOLSettings({
       ...GOLSettings,
       colors: {
-        ...GOLSettings.colors, 
-        deadColor: colorOptions[deadIdx],
-      }
-    })
-  }
-
-  const aliveColorSelected = (aliveIdx:number) => {
-    console.log("Selected new alive idx ", aliveIdx);
-
-    setGOLSettings({
-      ...GOLSettings,
-      colors: {
-        ...GOLSettings.colors, 
-        aliveColor: colorOptions[aliveIdx],
-      }
-    })
-
-  }
-
-  const onHeightChange = (value:number) => {
-    setGOLSettings({
-      ...GOLSettings,
-      gridSizing:{
-        ...GOLSettings.gridSizing,
-        height:value
-      }
+        ...GOLSettings.colors,
+        [type]: colorOptions[index],
+      },
     });
-  }
+  };
 
-  const onWidthHeight = (value:number) => {
+  const handleDimensionChange = (type: 'width' | 'height', value: number) => {
     setGOLSettings({
       ...GOLSettings,
-      gridSizing:{
+      gridSizing: {
         ...GOLSettings.gridSizing,
-        width:value
-      }
+        [type]: value,
+      },
     });
-  }
+  };
 
   return (
-    <div className='m-3'>
-      <div className='flex flex-row justify-evenly space-x-5 '>
-        <Dropdown name={"alive color"} dropdownOptions={colorOptions} onSelect={aliveColorSelected} />
-        <Dropdown name={"dead color"} dropdownOptions={colorOptions} onSelect={deadColorSelected}/>
-      </div>
-      <div className='flex flex-col justify-evenly'>
-        <CustomSlider 
-          value={GOLSettings.gridSizing.height}
-          onChange={onHeightChange}
-          label="height"
-          min={2}
-          max={20}
-          step={1}
-        />
-        <CustomSlider 
-          value={GOLSettings.gridSizing.width}
-          onChange={onWidthHeight}
-          label="width"
-          min={2}
-          max={20}
-          step={1}
-        />
-      </div>
-    </div>
-  )
-}
+    <Box sx={{ padding: 2, maxWidth: 400, margin: 'auto' }}>
+      <Grid container spacing={1}>
+        {/* Dropdowns */}
+        <Grid item xs={6}>
+          <Dropdown
+            name="Alive Color"
+            dropdownOptions={colorOptions}
+            onSelect={(idx) => handleColorChange('aliveColor', idx)}
+          />
+        </Grid>
+        <Grid item xs={6}>
+          <Dropdown
+            name="Dead Color"
+            dropdownOptions={colorOptions}
+            onSelect={(idx) => handleColorChange('deadColor', idx)}
+          />
+        </Grid>
 
+        {/* Sliders */}
+        <Grid item xs={12}>
+          <CustomSlider
+            value={GOLSettings.gridSizing.height}
+            onChange={(value) => handleDimensionChange('height', value)}
+            label="Height"
+            min={2}
+            max={20}
+            step={1}
+          />
+        </Grid>
+        <Grid item xs={12}>
+          <CustomSlider
+            value={GOLSettings.gridSizing.width}
+            onChange={(value) => handleDimensionChange('width', value)}
+            label="Width"
+            min={2}
+            max={20}
+            step={1}
+          />
+        </Grid>
+      </Grid>
+    </Box>
+  );
+};
