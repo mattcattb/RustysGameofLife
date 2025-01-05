@@ -14,8 +14,10 @@ pub trait Game {
     fn get_grid(&self) -> Vec<Vec<char>>;
     fn print(&self);
     fn interact_tile(&mut self, r:usize, c:usize);
+    fn paint_tile(&mut self, r:usize, c:usize, palet_option: char) -> Result<(), String>;
     fn edit_dimensions(&mut self, new_height:usize, new_width:usize);
     fn wipe(&mut self);
+    fn within_bounds(&self, r:usize, c:usize) -> bool;
 }
 
 #[derive(Debug, Clone, PartialEq, Eq)]
@@ -26,13 +28,29 @@ pub struct GameOfLife {
 
 impl Game for GameOfLife {
 
+    fn within_bounds(&self, r: usize, c: usize) -> bool {
+        (r < self.grid.len() && c < self.grid[0].len())
+    }
+
+    fn paint_tile(&mut self, r:usize, c:usize, palette_option: char) -> Result<(), String> {
+        // convert char to option and choose that 
+        if !self.within_bounds(r, c) {
+            return Err(format!("Coordinates ({}, {}) are out of bounds.", r, c));
+        }
+
+        if let Some(tile_state) = self.char_to_state.get(&palette_option) {
+            self.grid[r][c] = tile_state.clone(); // Update the tile with the new state
+            Ok(())
+        } else {
+            // Return an error if the palette_option is invalid
+            Err(format! ("Invalid palette option '{}'", palette_option ))
+        }
+    }
+
     fn wipe(&mut self){
         // turn all to dead 
-        for r in (0..self.grid.len()) {
-            for c in (0.. self.grid[0].len()){
-                self.grid[r][c] = TileState::Dead;
-            }
-        }
+        self.grid.iter_mut().for_each(|row| row.fill(TileState::Dead));
+
     }
 
     fn edit_dimensions(&mut self, mut new_height:usize, mut new_width:usize){
@@ -108,7 +126,7 @@ impl Game for GameOfLife {
 
     fn interact_tile(&mut self, r:usize, c:usize) {
         // flip tiles state!
-        if r < self.grid.len() && c < self.grid[r].len() {
+        if self.within_bounds(r, c) {
             match self.grid[r][c] {
                 TileState::Alive => {self.grid[r][c] = TileState::Dead},
                 TileState::Dead => {self.grid[r][c] = TileState::Alive}

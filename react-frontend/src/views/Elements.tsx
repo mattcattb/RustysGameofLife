@@ -1,9 +1,10 @@
 import React from 'react'
 
-type Props = {}
-
-const Elements = (props: Props) => {
+function ElementsView(){
   return (
     <div>Elements</div>
   )
 }
+
+
+export default ElementsView;

@@ -14,6 +14,9 @@ interface GameContextType {
 
   isPlaying: boolean;
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
+
+  tilePaletteSelected: string | null;
+  setTilePaletteSelected: (tilePalette:string|null) => void;
   
 }
 
@@ -35,7 +38,6 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [game, setGame] = useState<GameWasm | undefined>(undefined);
   const [grid, setGrid] = useState<CharGrid>([]);
   const [GOLSettings, setGOLSettings] = useState<GameOfLifeSettings>({
-    
     gridSizing:{
       width:10,
       maxWidth:30,
@@ -50,6 +52,8 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     },
     speedMS: 1000,
   });
+
+  const [tilePaletteSelected, setTilePaletteSelected] = useState<string|null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
 
   useEffect(() => {
@@ -101,6 +105,9 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
 
         isPlaying,
         setIsPlaying,
+
+        tilePaletteSelected,
+        setTilePaletteSelected
       }}
     >
       {children}

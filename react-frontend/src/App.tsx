@@ -1,14 +1,22 @@
-import './styles/App.css'
+import { useState } from 'react'
 
+import './styles/App.css'
 import GameOfLifeView from './views/GameOfLife';
-import { GameProvider } from './contexts/GameContext';
+import ElementsView from './views/Elements';
 
 function App() {
 
+  const [page, setPage] = useState<string>("gol");
+
   return (
-  <GameProvider>
-    <GameOfLifeView />
-  </GameProvider>
+    <div className='app'>
+      {page === "gol" && ( 
+        <GameOfLifeView />
+      )}
+      {page === "elements" && (
+        <ElementsView />
+      )}
+    </div>
   )
 }
 

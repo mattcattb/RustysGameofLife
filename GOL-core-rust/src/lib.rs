@@ -1,3 +1,4 @@
+use clap::builder::Str;
 use wasm_bindgen::prelude::*;
 mod game_logic;
 use game_logic::game::{Game, GameOfLife};
@@ -14,6 +15,21 @@ pub struct GameWasm {
 
 #[wasm_bindgen]
 impl GameWasm {
+
+    pub fn paint_tile(&mut self, r: usize, c: usize, palette_option: String) {
+        let char_option = palette_option.chars().next();
+    
+        if let Some(ch) = char_option {
+            if palette_option.chars().count() == 1 {
+                self.game.paint_tile(r, c, ch);
+            } else {
+                eprintln!("Error: Palette option must be a single character."); // Log error
+            }
+        } else {
+            eprintln!("Error: Palette option is empty or invalid."); // Log error
+        }
+    }
+    
 
     // create new game of height and width randomly
     pub fn new_random_game(height:usize, width:usize, tiles:String) -> Self {
