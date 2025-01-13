@@ -4,8 +4,8 @@ export type GridSizeData = {
   width:number,
   maxWidth:number,
   height:number,
-  maxHeight:number
-
+  maxHeight:number,
+  tileSize:number
 }
 
 export type GameOfLifeSettings = {

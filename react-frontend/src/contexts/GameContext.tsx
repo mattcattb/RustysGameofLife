@@ -4,7 +4,7 @@ import { CharGrid, GameOfLifeSettings } from '../types';
 
 interface GameContextType {
   game: GameWasm | undefined;
-  setGame: (game:GameWasm | undefined) => void
+  setGame: (game: GameWasm | undefined) => void;
 
   grid: CharGrid;
   setGrid: React.Dispatch<React.SetStateAction<CharGrid>>;
@@ -16,8 +16,7 @@ interface GameContextType {
   setIsPlaying: React.Dispatch<React.SetStateAction<boolean>>;
 
   tilePaletteSelected: string | null;
-  setTilePaletteSelected: (tilePalette:string|null) => void;
-  
+  setTilePaletteSelected: (tilePalette: string | null) => void;
 }
 
 const GameContext = createContext<GameContextType | undefined>(undefined);
@@ -38,12 +37,12 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   const [game, setGame] = useState<GameWasm | undefined>(undefined);
   const [grid, setGrid] = useState<CharGrid>([]);
   const [GOLSettings, setGOLSettings] = useState<GameOfLifeSettings>({
-    gridSizing:{
-      width:10,
-      maxWidth:30,
+    gridSizing: {
+      width: 10,
+      maxWidth: 30,
       height: 10,
-      maxHeight:30
-      
+      maxHeight: 30,
+      tileSize:10
     },
     tileOptions: "x0",
     colors: {
@@ -53,15 +52,29 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     speedMS: 1000,
   });
 
-  const [tilePaletteSelected, setTilePaletteSelected] = useState<string|null>(null);
+  const [tilePaletteSelected, setTilePaletteSelected] = useState<string | null>(null);
   const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+  const handleResize = () => {
+    const maxWidth = Math.floor(window.innerWidth / GOLSettings.gridSizing.tileSize);
+    const maxHeight = Math.floor(window.innerHeight / GOLSettings.gridSizing.tileSize);
+
+    setGOLSettings((prevSettings) => ({
+      ...prevSettings,
+      gridSizing: {
+        ...prevSettings.gridSizing,
+        width: maxWidth,
+        height: maxHeight
+      }
+    }));
+  };
 
   useEffect(() => {
     const initWasm = async () => {
       try {
         await init();
         const { tileOptions, gridSizing } = GOLSettings;
-        const {height, width} = gridSizing;
+        const { height, width } = gridSizing;
         const newGame = GameWasm.new_random_game(height, width, tileOptions);
         setGame(newGame);
         setGrid(newGame.get_grid());
@@ -75,7 +88,7 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
   useEffect(() => {
     if (isPlaying) {
       const interval = setInterval(() => {
-        if (game){
+        if (game) {
           game.next_turn();
           const newGrid = game.get_grid();
           setGrid(newGrid);
@@ -90,6 +103,13 @@ export const GameProvider: React.FC<GameProviderProps> = ({ children }) => {
     game.edit_dimensions(GOLSettings.gridSizing.height, GOLSettings.gridSizing.width);
     setGrid(game.get_grid());
   }, [GOLSettings.gridSizing.height, GOLSettings.gridSizing.width]);
+
+  useEffect(() => {
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial call to set dimensions correctly
+
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   return (
     <GameContext.Provider
