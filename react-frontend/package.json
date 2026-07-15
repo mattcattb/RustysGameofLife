@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "build-wasm": "cd ../GOL-core-rust && wasm-pack build --target web",
     "install-wasm": "npm install",
-    "update-wasm": "npm run wasm:build && npm run wasm:link",
+    "update-wasm": "npm run build-wasm && npm install",
     "start": "npm run build-wasm && npm run install-wasm && vite"
   },
   "dependencies": {
