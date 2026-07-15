@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { 
   Box,
   Paper,
@@ -35,14 +35,18 @@ const PANELS = {
   }
 };
 
+type PanelKey = keyof typeof PANELS;
+
 function GameOfLifeView() {
   // Track which panel is currently open (if any)
-  const [activePanel, setActivePanel] = useState(null);
+  const [activePanel, setActivePanel] = useState<PanelKey | null>(null);
 
   // Toggle panel open/closed
-  const handlePanelClick = (panelKey) => {
+  const handlePanelClick = (panelKey: PanelKey) => {
     setActivePanel(activePanel === panelKey ? null : panelKey);
   };
+
+  const ActivePanel = activePanel ? PANELS[activePanel].component : null;
 
   return (
     <Box sx={{ 
@@ -61,7 +65,7 @@ function GameOfLifeView() {
         }}
       >
         <Stack spacing={1}>
-          {Object.entries(PANELS).map(([key, { icon, title }]) => (
+          {(Object.keys(PANELS) as PanelKey[]).map((key) => (
             <IconButton
               key={key}
               onClick={() => handlePanelClick(key)}
@@ -74,7 +78,7 @@ function GameOfLifeView() {
                 }
               }}
             >
-              {icon}
+              {PANELS[key].icon}
             </IconButton>
           ))}
         </Stack>
@@ -97,7 +101,7 @@ function GameOfLifeView() {
           }}
         >
           {/* Render the active panel's component */}
-          {activePanel && React.createElement(PANELS[activePanel].component)}
+          {ActivePanel && <ActivePanel />}
         </Paper>
       </Collapse>
 

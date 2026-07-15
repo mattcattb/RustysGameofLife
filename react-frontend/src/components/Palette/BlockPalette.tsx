@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { useGame } from '../../contexts/GameContext';
 
 import PaletteBlock  from './PaletteBlock';
@@ -15,7 +13,7 @@ export default function BlockPalette() {
   return (
     <div className='flex flex-row'>
       {GOLSettings.tileOptions.split('').map((c:string, id:number) => (
-        <PaletteBlock onClick={() => onPaletClick(id)} color={getCellColor(GOLSettings, c)} outline={tilePaletteSelected === c}/>
+        <PaletteBlock key={c} onClick={() => onPaletClick(id)} color={getCellColor(GOLSettings, c)} outline={tilePaletteSelected === c}/>
       ))}
     </div>
   )
