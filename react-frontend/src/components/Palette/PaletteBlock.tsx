@@ -1,4 +1,3 @@
-import React from 'react'
 import Button from '../ui/Button'
 
 type Props = {
@@ -17,6 +16,6 @@ export default function PaletteBlock(props: Props) {
 
 
   return (
-    <Button onClick={props.onClick} style={buttonStyle}></Button>
+    <Button icon={null} label="" onClick={props.onClick} color="primary" style={buttonStyle} />
   )
 }

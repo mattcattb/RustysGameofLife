@@ -1,14 +1,9 @@
-import { useState } from 'react'
-
 import './styles/App.css'
 import GameOfLifeView from './views/GameOfLife';
 import { GameProvider } from './contexts/GameContext';
 import { Container } from '@mui/material';
 
 function App() {
-
-  const [page, setPage] = useState<string>("gol");
-
   return (
   <Container 
     maxWidth="xl"

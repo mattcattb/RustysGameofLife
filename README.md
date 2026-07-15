@@ -2,6 +2,8 @@
 
 Rusty's Game of Life is Conway's Game of Life with the simulation core written in Rust and rendered through a React/WebAssembly frontend.
 
+**Live demo:** [Play Rusty's Game of Life](https://mattcattb.github.io/RustysGameofLife/)
+
 ## Screenshots
 
 ![Rusty's Game of Life simulation](docs/images/rustys-game-of-life.png)
